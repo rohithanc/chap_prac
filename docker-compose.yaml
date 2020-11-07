@@ -1,18 +1,22 @@
 version: "3.7"
 services:
-  chaperoo-frontend:
-    image: rohithan9615/chaperoo-frontend:${app_version}
+  chaperoo-client:
+    image: jordangrindrod/chaperoo-client
     build: .
     ports:
       - target: 80
         published: 80
     depends_on:
-      - chaperoo-service
-  chaperoo-service:
-    image: rohithan9615/chaperoo-service
-    depends_on:
+      - chaperoo-service    
+  chaperoo-service: 
+    image: jordangrindrod/chaperoo-service
+    depends_on: 
       - chaperoo-db
   chaperoo-db:
-    image: rohithan9615/chaperoo-db
+    image: jordangrindrod/chaperoo-db
     environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=password
+  jenkins:
+    image: jenkins/jenkins:latest
+    environment:
+      - JENKINS_OPTS="--prefix=/jenkins"
